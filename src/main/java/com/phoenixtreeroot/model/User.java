@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class User {
@@ -23,7 +25,8 @@ public class User {
 	@Column(name = "last_name")
 	public String lastName;	
 	@Column(name = "e_mail", unique = true, nullable=false)
-	public String email;
+	public String email;	
+	@JsonIgnore
 	@Column(nullable=false)
 	public String password;
 	@Temporal(TemporalType.TIMESTAMP)
