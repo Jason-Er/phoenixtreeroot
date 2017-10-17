@@ -26,6 +26,9 @@ public class Play {
 	@ManyToOne
 	public User playwright;
 	
+	@Column(name = "playwright_id", insertable = false, updatable = false)
+	public Long playwrightId;
+	
 	@OneToMany(mappedBy = "play", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	public List<Scene> scenes;

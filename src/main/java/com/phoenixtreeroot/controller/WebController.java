@@ -4,8 +4,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.phoenixtreeroot.model.Play;
+import com.phoenixtreeroot.model.StagePlay;
 import com.phoenixtreeroot.model.User;
 import com.phoenixtreeroot.service.PlayService;
+import com.phoenixtreeroot.service.StagePlayService;
 import com.phoenixtreeroot.service.UserService;
 
 import java.util.List;
@@ -32,6 +34,9 @@ public class WebController {
 	
 	@Autowired
 	PlayService playService;
+	
+	@Autowired
+	StagePlayService stagePlayService;
 	
     @RequestMapping("/")
     public String index() {
@@ -88,4 +93,54 @@ public class WebController {
 		return new ResponseEntity<Play>(currentPlay, HttpStatus.OK);
 	}
     
+    // for stage play
+    @RequestMapping(value = "/stageplay/", method = RequestMethod.GET)
+	public ResponseEntity<List<StagePlay>> listAllStagePlays() {
+		List<StagePlay> plays = stagePlayService.findAllStagePlays();
+		if (plays.isEmpty()) {
+			logger.info("has not stagePlays!");			
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<StagePlay>>(plays, HttpStatus.OK);
+	}
+    
+    @RequestMapping(value = "/stageplay/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getStagePlay(@PathVariable("id") long id) {
+		logger.info("Fetching Play with id {}", id);
+		StagePlay play = stagePlayService.findById(id);
+		if (play == null) {
+			logger.error("Play with id {} not found.", id);
+			ResponseEntity.noContent();
+			return new ResponseEntity("StagePlay with id " + id + " not found", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<StagePlay>(play, HttpStatus.OK);
+	}
+    
+    @RequestMapping(value = "/stageplay/", method = RequestMethod.POST)
+	public ResponseEntity<?> createStagePlay(@RequestBody StagePlay play, UriComponentsBuilder ucBuilder) {
+		logger.info("Creating Play : {}", play);
+
+		stagePlayService.saveStagePlay(play);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(ucBuilder.path("/model/v1/play/{id}").buildAndExpand(play.id).toUri());
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+	}
+    
+    @RequestMapping(value = "/stageplay/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateStagePlay(@PathVariable("id") long id, @RequestBody StagePlay play) {
+		logger.info("Updating Play with id {}", id);
+
+		StagePlay currentPlay = stagePlayService.findById(id);
+
+		if (currentPlay == null) {
+			logger.error("Unable to update. Play with id {} not found.", id);
+			return new ResponseEntity("Unable to upate. Play with id " + id + " not found.", HttpStatus.NOT_FOUND);
+		}
+
+		currentPlay = play;
+
+		stagePlayService.saveStagePlay(currentPlay);
+		return new ResponseEntity<StagePlay>(currentPlay, HttpStatus.OK);
+	}
 }

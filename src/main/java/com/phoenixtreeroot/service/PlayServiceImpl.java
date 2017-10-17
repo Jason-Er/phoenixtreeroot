@@ -16,36 +16,36 @@ import com.phoenixtreeroot.repository.PlayRepository;
 public class PlayServiceImpl implements PlayService {
 
 	@Autowired
-	private PlayRepository playRepository;
+	private PlayRepository repository;
 
 	@Override
 	public Play findById(Long id) {
-		return playRepository.findOne(id);
+		return repository.findOne(id);
 	}
 
 	@Override
 	public void savePlay(Play play) {
-		playRepository.save(play);
+		repository.save(play);
 	}
 
 	@Override
 	public void deletePlayById(Long id) {
-		playRepository.delete(id);
+		repository.delete(id);
 	}
 
 	@Override
 	public void deleteAllPlays() {
-		playRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@Override
 	public List<Play> findAllPlays() {
-		return playRepository.findAll();
+		return repository.findAll();
 	}
 
 	@Override
 	public Page<Play> findByPage(Pageable var1) {
-		return playRepository.findAll(var1);
+		return repository.findAll(var1);
 	}
 
 	@Override
