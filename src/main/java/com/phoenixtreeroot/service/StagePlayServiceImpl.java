@@ -46,9 +46,8 @@ public class StagePlayServiceImpl implements StagePlayService {
 	}
 
 	@Override
-	public Page<StagePlay> findByPage(Pageable var1) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<StagePlay> findByPage(Pageable page) {
+		return repository.findAll(page);
 	}
 
 	@Override

@@ -3,6 +3,8 @@ package com.phoenixtreeroot.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.phoenixtreeroot.model.View;
 import com.phoenixtreeroot.model.Play;
 import com.phoenixtreeroot.model.StagePlay;
 import com.phoenixtreeroot.model.User;
@@ -15,8 +17,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,7 +50,7 @@ public class WebController {
         return "Greetings from Spring Boot!";
     }
     
-    @RequestMapping(value = "/play/", method = RequestMethod.GET)
+    @RequestMapping(value = "/play", method = RequestMethod.GET)    
 	public ResponseEntity<List<Play>> listAllPlays() {
 		List<Play> plays = playService.findAllPlays();
 		if (plays.isEmpty()) {
@@ -94,7 +101,7 @@ public class WebController {
 	}
     
     // for stage play
-    @RequestMapping(value = "/stageplay/", method = RequestMethod.GET)
+    @RequestMapping(value = "/stageplay", method = RequestMethod.GET)    
 	public ResponseEntity<List<StagePlay>> listAllStagePlays() {
 		List<StagePlay> plays = stagePlayService.findAllStagePlays();
 		if (plays.isEmpty()) {
@@ -143,4 +150,26 @@ public class WebController {
 		stagePlayService.saveStagePlay(currentPlay);
 		return new ResponseEntity<StagePlay>(currentPlay, HttpStatus.OK);
 	}
+    
+    // for stage playInfo
+    @RequestMapping(value = "/stageplayinfo", method = RequestMethod.GET)
+    @JsonView(View.StagePlayInfo.class)
+    public Page<StagePlay> getPlaysInfo(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) 
+    Pageable pageable) {
+	    return stagePlayService.findByPage(pageable);
+	}
+    
+    @RequestMapping(value = "/stageplayinfo/{id}", method = RequestMethod.GET)
+    @JsonView(View.StagePlayInfo.class)
+	public ResponseEntity<?> getStagePlayInfo(@PathVariable("id") long id) {
+		logger.info("Fetching Play with id {}", id);
+		StagePlay play = stagePlayService.findById(id);
+		if (play == null) {
+			logger.error("Play with id {} not found.", id);
+			ResponseEntity.noContent();
+			return new ResponseEntity("StagePlay with id " + id + " not found", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<StagePlay>(play, HttpStatus.OK);
+	}
+    
 }

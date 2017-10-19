@@ -14,43 +14,48 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name="stage_play")
 public class StagePlay {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)	
-	public Long id;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)		
+	public Long id;	
+
 	@Column(nullable=false)
 	public String name;
 	
-	@Column(name = "poster_url")
+	@Column(name = "poster_url")	
 	public String posterURL;	
 	public String briefIntro;
 	
 	@ManyToOne
 	@JsonIgnore
 	public Play play;
-	@Column(name = "play_id", insertable = false, updatable = false)
+	@Column(name = "play_id", insertable = false, updatable = false)	
 	public Long playId;
 	
 	@ManyToOne
-	public User director;	
+	@JsonView(View.StagePlay.class)
+	public User director;
 	@Column(name = "director_id", insertable = false, updatable = false)
 	public Long directorId;
 	
-	@ManyToOne
+	@ManyToOne	
+	@JsonView(View.StagePlay.class)
 	public Stage stage;
 	@Column(name = "stage_id", insertable = false, updatable = false)
 	public long stageId;
 	
 	@OneToMany(mappedBy = "stagePlay", cascade = CascadeType.ALL)
 	@JsonManagedReference
+	@JsonView(View.StagePlay.class)
 	public List<StageScene> scenes;
 	
 	@OneToMany(mappedBy = "stagePlay", cascade = CascadeType.ALL)
 	@JsonManagedReference
+	@JsonView(View.StagePlay.class)
 	public List<StageRole> cast;
 	
 }
