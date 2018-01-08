@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.phoenixtreeroot.model.Play;
-import com.phoenixtreeroot.model.StagePlay;
+import com.phoenixtreeroot.model.script.Play;
+import com.phoenixtreeroot.model.script.StagePlay;
 import com.phoenixtreeroot.repository.PlayRepository;
 import com.phoenixtreeroot.repository.StagePlayRepository;
 

@@ -1,4 +1,4 @@
-package com.phoenixtreeroot.model;
+package com.phoenixtreeroot.model.label;
 
 public class View {	
 	public interface StagePlayInfo {}

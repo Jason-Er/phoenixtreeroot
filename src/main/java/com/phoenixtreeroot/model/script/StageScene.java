@@ -1,4 +1,4 @@
-package com.phoenixtreeroot.model;
+package com.phoenixtreeroot.model.script;
 
 import java.util.List;
 
@@ -11,28 +11,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-public class Scene {
-
+@Table(name="script_stage_scene")
+public class StageScene {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)	
 	@JsonBackReference
-	public Play play;
+	public StagePlay stagePlay;	
+	@Column(name = "stage_play_id", insertable = false, updatable = false)
+	public Long stagePlayId;
 	
-	@Column(name = "play_id", insertable = false, updatable = false)
-	public Long playId;
-	
-	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "stageScene", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
-	public List<Line> lines;
+	public List<StageLine> stageLines;
 	
 	@Column(name = "act_ordinal")
 	public Long actOrdinal;
@@ -40,6 +40,15 @@ public class Scene {
 		
 	public String setting;
 	@Column(name = "at_rise")
-	public String atrise;	
+	public String atrise;
 	
+	@Column(name = "action_script")
+	public String actionScript;
+	
+	@Column(name = "setting_url")
+	public String settingURL;
+	
+	@Column(name = "bgm_url")
+	public String backgroundMusicURL;
+
 }

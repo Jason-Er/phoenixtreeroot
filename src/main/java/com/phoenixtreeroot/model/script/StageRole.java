@@ -1,4 +1,4 @@
-package com.phoenixtreeroot.model;
+package com.phoenixtreeroot.model.script;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,12 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.phoenixtreeroot.model.system.User;
 
 @Entity
-public class Role {
+@Table(name="script_stage_role")
+public class StageRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
@@ -23,13 +25,18 @@ public class Role {
     @Column(name = "last_name")
     public String lastName;
 
+    public String description;
+    
     @ManyToOne(optional = false, fetch = FetchType.EAGER)	
 	@JsonBackReference
-	public Play play;
-        
-	@Column(name = "play_id", insertable = false, updatable = false)
-	public Long playId;	
-    
-    public String description;
+	public StagePlay stagePlay;        
+	@Column(name = "stage_play_id", insertable = false, updatable = false)
+	public Long stagePlayId;
 		
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)	
+	@JsonBackReference
+	public User user;	
+	@Column(name = "user_id", insertable = false, updatable = false)
+	public Long userId;
+     
 }

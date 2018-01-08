@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.phoenixtreeroot.model.View;
-import com.phoenixtreeroot.model.Play;
-import com.phoenixtreeroot.model.StagePlay;
-import com.phoenixtreeroot.model.User;
+import com.phoenixtreeroot.model.label.View;
+import com.phoenixtreeroot.model.script.Play;
+import com.phoenixtreeroot.model.script.StagePlay;
+import com.phoenixtreeroot.model.system.User;
 import com.phoenixtreeroot.service.PlayService;
 import com.phoenixtreeroot.service.StagePlayService;
 import com.phoenixtreeroot.service.UserService;
@@ -157,19 +157,6 @@ public class WebController {
     public Page<StagePlay> getPlaysInfo(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) 
     Pageable pageable) {
 	    return stagePlayService.findByPage(pageable);
-	}
-    
-    @RequestMapping(value = "/stageplayinfo/{id}", method = RequestMethod.GET)
-    @JsonView(View.StagePlayInfo.class)
-	public ResponseEntity<?> getStagePlayInfo(@PathVariable("id") long id) {
-		logger.info("Fetching Play with id {}", id);
-		StagePlay play = stagePlayService.findById(id);
-		if (play == null) {
-			logger.error("Play with id {} not found.", id);
-			ResponseEntity.noContent();
-			return new ResponseEntity("StagePlay with id " + id + " not found", HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<StagePlay>(play, HttpStatus.OK);
-	}
+	}       
     
 }

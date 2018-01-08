@@ -1,4 +1,4 @@
-package com.phoenixtreeroot.model;
+package com.phoenixtreeroot.model.script;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,30 +9,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-public class Line {
-
+@Table(name="script_stage_line")
+public class StageLine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
-
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JsonBackReference
-	public Scene scene;
-		
-	@Column(name = "scene_id", insertable = false, updatable = false)
-	public Long sceneId;		
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JsonBackReference
-	public Role role;
+	public StageScene stageScene;
 		
-	@Column(name = "role_id", insertable = false, updatable = false)
-	public Long roleId;
+	@Column(name = "stage_scene_id", insertable = false, updatable = false)
+	public Long stageSceneId;
+	
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JsonBackReference
+	public StageRole stageRole;
+
+	@Column(name = "stage_role_id", insertable = false, updatable = false)
+	public Long stageRoleId;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=false)
@@ -44,6 +44,10 @@ public class Line {
 	@Column(nullable=false)
 	public String dialogue;
 	
+	@Column(name = "begin_time")
+	public float beginTime;
 	
-
+	@Column(name = "audio_url")
+	public String audioURL;
+		
 }

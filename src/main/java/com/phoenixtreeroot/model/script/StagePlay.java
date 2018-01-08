@@ -1,4 +1,4 @@
-package com.phoenixtreeroot.model;
+package com.phoenixtreeroot.model.script;
 
 import java.util.List;
 
@@ -15,9 +15,11 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.phoenixtreeroot.model.label.View;
+import com.phoenixtreeroot.model.system.User;
 
 @Entity
-@Table(name="stage_play")
+@Table(name="script_stage_play")
 public class StagePlay {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)		

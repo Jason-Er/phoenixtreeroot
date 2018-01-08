@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.phoenixtreeroot.model.Line;
-import com.phoenixtreeroot.model.LineType;
-import com.phoenixtreeroot.model.Play;
-import com.phoenixtreeroot.model.Role;
-import com.phoenixtreeroot.model.Scene;
-import com.phoenixtreeroot.model.User;
+import com.phoenixtreeroot.model.script.Line;
+import com.phoenixtreeroot.model.script.LineType;
+import com.phoenixtreeroot.model.script.Play;
+import com.phoenixtreeroot.model.script.Role;
+import com.phoenixtreeroot.model.script.Scene;
+import com.phoenixtreeroot.model.system.User;
 import com.phoenixtreeroot.service.PlayService;
 import com.phoenixtreeroot.service.UserService;
 
