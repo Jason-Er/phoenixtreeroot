@@ -1,15 +1,21 @@
 package com.phoenixtreeroot.model.script;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.phoenixtreeroot.model.system.Privilege;
 import com.phoenixtreeroot.model.system.User;
 
 @Entity
@@ -38,5 +44,8 @@ public class StageRole {
 	public User user;	
 	@Column(name = "user_id", insertable = false, updatable = false)
 	public Long userId;
-     
+	
+	@ManyToMany
+    @JoinTable(name = "script_stage_role_privileges", joinColumns = @JoinColumn(name = "stage_role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    public Collection<Privilege> permissions;
 }

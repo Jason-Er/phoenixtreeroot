@@ -30,9 +30,11 @@ public class User {
 	@Column(name = "first_name")
 	public String firstName;	
 	@Column(name = "last_name")
-	public String lastName;	
+	public String lastName;
 	@Column(name = "e_mail", unique = true, nullable=false)
-	public String email;	
+	public String email;
+	@Column(unique = true, nullable=false)
+	public String cel;
 	@JsonIgnore
 	@Column(nullable=false)
 	public String password;
