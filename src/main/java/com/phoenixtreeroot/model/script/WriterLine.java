@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.phoenixtreeroot.common.type.LineType;
 
 @Entity
 @Table(name="writer_line")

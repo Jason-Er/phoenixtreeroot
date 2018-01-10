@@ -1,4 +1,4 @@
-package com.phoenixtreeroot.model.system;
+package com.phoenixtreeroot.common.type;
 
 public enum RoleType {
 	ADMIN,

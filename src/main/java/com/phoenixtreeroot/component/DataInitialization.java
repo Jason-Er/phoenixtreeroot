@@ -8,11 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.phoenixtreeroot.model.script.WriterLine;
-import com.phoenixtreeroot.model.script.LineType;
+import com.phoenixtreeroot.common.type.LineType;
+import com.phoenixtreeroot.common.type.RoleType;
 import com.phoenixtreeroot.model.script.WriterPlay;
 import com.phoenixtreeroot.model.script.WriterScene;
 import com.phoenixtreeroot.model.system.Role;
-import com.phoenixtreeroot.model.system.RoleType;
 import com.phoenixtreeroot.model.system.User;
 import com.phoenixtreeroot.service.PlayService;
 import com.phoenixtreeroot.service.RoleService;

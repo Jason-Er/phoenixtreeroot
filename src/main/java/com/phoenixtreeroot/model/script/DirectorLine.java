@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.phoenixtreeroot.common.type.LineType;
 
 @Entity
 @Table(name="director_line")

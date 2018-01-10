@@ -1,14 +1,18 @@
 package com.phoenixtreeroot.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.phoenixtreeroot.common.type.RoleType;
+import com.phoenixtreeroot.common.type.TokenType;
+import com.phoenixtreeroot.event.OnRegistrationCompleteEvent;
 import com.phoenixtreeroot.model.label.View;
 import com.phoenixtreeroot.model.script.WriterPlay;
 import com.phoenixtreeroot.model.script.DirectorPlay;
 import com.phoenixtreeroot.model.system.Role;
-import com.phoenixtreeroot.model.system.RoleType;
 import com.phoenixtreeroot.model.system.User;
 import com.phoenixtreeroot.service.PlayService;
 import com.phoenixtreeroot.service.RoleService;
@@ -18,11 +22,13 @@ import com.phoenixtreeroot.service.UserService;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -35,6 +41,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/v1/method")
@@ -53,6 +60,9 @@ public class MethodController {
 	
 	@Autowired
 	StagePlayService stagePlayService;
+	
+	@Autowired
+    ApplicationEventPublisher eventPublisher;
 	
     @RequestMapping("/")
     public String index() {
@@ -168,16 +178,37 @@ public class MethodController {
 	    return stagePlayService.findByPage(pageable);
 	}   
     
-    // for user
+    // for user registration
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
-	public ResponseEntity<?> createUser(@Valid @RequestBody User user, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createUser(@Valid @RequestBody User user, UriComponentsBuilder ucBuilder, HttpServletRequest request) {
 		logger.info("Creating User " + user.firstName);
 
 		final User registered = userService.registerNewUserAccount(user);
 		
+		UriComponents uri = ServletUriComponentsBuilder.fromContextPath(request).path("/confirm").build();		
+		eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), uri.getPath()));
+		
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/vi/method/user/{id}").buildAndExpand(user.id).toUri());
+		headers.setLocation(ucBuilder.path("/vi/method/user/{id}").buildAndExpand(registered.id).toUri());
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
+    
+    // for user registration confirm
+    @RequestMapping(value = "/user/confirm", method = RequestMethod.POST)
+    public ResponseEntity<?> confirmRegistration(@RequestParam("token") String token) {
+    	final TokenType result = userService.validateVerificationToken(token);
+    	switch(result) {
+    		case VALID:
+    			// final User user = userService.findByToken(token);
+    			// todo: send confirmed email or just return success html
+    			break;
+    		case INVALID:
+    			break;
+    		case EXPIRED:
+    			break;
+    	}
+		return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
     
 }
