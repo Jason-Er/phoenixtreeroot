@@ -19,8 +19,8 @@ import com.phoenixtreeroot.model.system.Privilege;
 import com.phoenixtreeroot.model.system.User;
 
 @Entity
-@Table(name="script_stage_role")
-public class StageRole {
+@Table(name="director_role")
+public class DirectorRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
@@ -35,7 +35,7 @@ public class StageRole {
     
     @ManyToOne(optional = false, fetch = FetchType.EAGER)	
 	@JsonBackReference
-	public StagePlay stagePlay;        
+	public DirectorPlay stagePlay;        
 	@Column(name = "stage_play_id", insertable = false, updatable = false)
 	public Long stagePlayId;
 		
@@ -46,6 +46,6 @@ public class StageRole {
 	public Long userId;
 	
 	@ManyToMany
-    @JoinTable(name = "script_stage_role_privileges", joinColumns = @JoinColumn(name = "stage_role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    @JoinTable(name = "director_role_privileges", joinColumns = @JoinColumn(name = "director_role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     public Collection<Privilege> permissions;
 }

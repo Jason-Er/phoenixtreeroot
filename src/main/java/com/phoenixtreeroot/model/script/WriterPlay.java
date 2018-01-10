@@ -16,8 +16,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.phoenixtreeroot.model.system.User;
 
 @Entity
-@Table(name="script_play")
-public class Play {
+@Table(name="writer_play")
+public class WriterPlay {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)	
@@ -34,10 +34,10 @@ public class Play {
 	
 	@OneToMany(mappedBy = "play", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	public List<Scene> scenes;
+	public List<WriterScene> scenes;
 	
 	@OneToMany(mappedBy = "play", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	public List<Role2> cast;
+	public List<WriterRole> cast;
 
 }

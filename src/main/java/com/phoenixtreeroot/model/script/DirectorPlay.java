@@ -19,8 +19,8 @@ import com.phoenixtreeroot.model.label.View;
 import com.phoenixtreeroot.model.system.User;
 
 @Entity
-@Table(name="script_stage_play")
-public class StagePlay {
+@Table(name="director_play")
+public class DirectorPlay {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)		
 	public Long id;	
@@ -34,7 +34,7 @@ public class StagePlay {
 	
 	@ManyToOne
 	@JsonIgnore
-	public Play play;
+	public WriterPlay play;
 	@Column(name = "play_id", insertable = false, updatable = false)	
 	public Long playId;
 	
@@ -53,11 +53,11 @@ public class StagePlay {
 	@OneToMany(mappedBy = "stagePlay", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	@JsonView(View.StagePlay.class)
-	public List<StageScene> scenes;
+	public List<DirectorScene> scenes;
 	
 	@OneToMany(mappedBy = "stagePlay", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	@JsonView(View.StagePlay.class)
-	public List<StageRole> cast;
+	public List<DirectorRole> cast;
 	
 }

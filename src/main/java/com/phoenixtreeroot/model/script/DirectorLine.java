@@ -14,22 +14,22 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name="script_stage_line")
-public class StageLine {
+@Table(name="director_line")
+public class DirectorLine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JsonBackReference
-	public StageScene stageScene;
+	public DirectorScene stageScene;
 		
 	@Column(name = "stage_scene_id", insertable = false, updatable = false)
 	public Long stageSceneId;
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JsonBackReference
-	public StageRole stageRole;
+	public DirectorRole stageRole;
 
 	@Column(name = "stage_role_id", insertable = false, updatable = false)
 	public Long stageRoleId;

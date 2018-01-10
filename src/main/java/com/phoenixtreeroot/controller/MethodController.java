@@ -5,8 +5,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.phoenixtreeroot.model.label.View;
-import com.phoenixtreeroot.model.script.Play;
-import com.phoenixtreeroot.model.script.StagePlay;
+import com.phoenixtreeroot.model.script.WriterPlay;
+import com.phoenixtreeroot.model.script.DirectorPlay;
 import com.phoenixtreeroot.model.system.Role;
 import com.phoenixtreeroot.model.system.RoleType;
 import com.phoenixtreeroot.model.system.User;
@@ -38,9 +38,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
 @RequestMapping("/v1/method")
-public class WebController {
+public class MethodController {
 
-	public static final Logger logger = LoggerFactory.getLogger(WebController.class);
+	public static final Logger logger = LoggerFactory.getLogger(MethodController.class);
 	
 	@Autowired
 	UserService userService;
@@ -60,29 +60,29 @@ public class WebController {
     }
     
     @RequestMapping(value = "/play", method = RequestMethod.GET)    
-	public ResponseEntity<List<Play>> listAllPlays() {
-		List<Play> plays = playService.findAllPlays();
+	public ResponseEntity<List<WriterPlay>> listAllPlays() {
+		List<WriterPlay> plays = playService.findAllPlays();
 		if (plays.isEmpty()) {
 			logger.info("has not plays!");			
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Play>>(plays, HttpStatus.OK);
+		return new ResponseEntity<List<WriterPlay>>(plays, HttpStatus.OK);
 	}
     
     @RequestMapping(value = "/play/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getPlay(@PathVariable("id") long id) {
 		logger.info("Fetching Play with id {}", id);
-		Play play = playService.findById(id);
+		WriterPlay play = playService.findById(id);
 		if (play == null) {
 			logger.error("Play with id {} not found.", id);
 			ResponseEntity.noContent();
 			return new ResponseEntity("Play with id " + id + " not found", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Play>(play, HttpStatus.OK);
+		return new ResponseEntity<WriterPlay>(play, HttpStatus.OK);
 	}
     
     @RequestMapping(value = "/play/", method = RequestMethod.POST)
-	public ResponseEntity<?> createPlay(@RequestBody Play play, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createPlay(@RequestBody WriterPlay play, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating Play : {}", play);
 
 		playService.savePlay(play);
@@ -93,10 +93,10 @@ public class WebController {
 	}
 
     @RequestMapping(value = "/play/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updatePlay(@PathVariable("id") long id, @RequestBody Play play) {
+	public ResponseEntity<?> updatePlay(@PathVariable("id") long id, @RequestBody WriterPlay play) {
 		logger.info("Updating Play with id {}", id);
 
-		Play currentPlay = playService.findById(id);
+		WriterPlay currentPlay = playService.findById(id);
 
 		if (currentPlay == null) {
 			logger.error("Unable to update. Play with id {} not found.", id);
@@ -106,34 +106,34 @@ public class WebController {
 		currentPlay = play;
 
 		playService.savePlay(currentPlay);
-		return new ResponseEntity<Play>(currentPlay, HttpStatus.OK);
+		return new ResponseEntity<WriterPlay>(currentPlay, HttpStatus.OK);
 	}
     
     // for stage play
     @RequestMapping(value = "/stageplay", method = RequestMethod.GET)    
-	public ResponseEntity<List<StagePlay>> listAllStagePlays() {
-		List<StagePlay> plays = stagePlayService.findAllStagePlays();
+	public ResponseEntity<List<DirectorPlay>> listAllStagePlays() {
+		List<DirectorPlay> plays = stagePlayService.findAllStagePlays();
 		if (plays.isEmpty()) {
 			logger.info("has not stagePlays!");			
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<StagePlay>>(plays, HttpStatus.OK);
+		return new ResponseEntity<List<DirectorPlay>>(plays, HttpStatus.OK);
 	}
     
     @RequestMapping(value = "/stageplay/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getStagePlay(@PathVariable("id") long id) {
 		logger.info("Fetching Play with id {}", id);
-		StagePlay play = stagePlayService.findById(id);
+		DirectorPlay play = stagePlayService.findById(id);
 		if (play == null) {
 			logger.error("Play with id {} not found.", id);
 			ResponseEntity.noContent();
 			return new ResponseEntity("StagePlay with id " + id + " not found", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<StagePlay>(play, HttpStatus.OK);
+		return new ResponseEntity<DirectorPlay>(play, HttpStatus.OK);
 	}
     
     @RequestMapping(value = "/stageplay/", method = RequestMethod.POST)
-	public ResponseEntity<?> createStagePlay(@RequestBody StagePlay play, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createStagePlay(@RequestBody DirectorPlay play, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating Play : {}", play);
 
 		stagePlayService.saveStagePlay(play);
@@ -144,10 +144,10 @@ public class WebController {
 	}
     
     @RequestMapping(value = "/stageplay/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateStagePlay(@PathVariable("id") long id, @RequestBody StagePlay play) {
+	public ResponseEntity<?> updateStagePlay(@PathVariable("id") long id, @RequestBody DirectorPlay play) {
 		logger.info("Updating Play with id {}", id);
 
-		StagePlay currentPlay = stagePlayService.findById(id);
+		DirectorPlay currentPlay = stagePlayService.findById(id);
 
 		if (currentPlay == null) {
 			logger.error("Unable to update. Play with id {} not found.", id);
@@ -157,13 +157,13 @@ public class WebController {
 		currentPlay = play;
 
 		stagePlayService.saveStagePlay(currentPlay);
-		return new ResponseEntity<StagePlay>(currentPlay, HttpStatus.OK);
+		return new ResponseEntity<DirectorPlay>(currentPlay, HttpStatus.OK);
 	}
     
     // for stage playInfo
     @RequestMapping(value = "/stageplayinfo", method = RequestMethod.GET)
     @JsonView(View.StagePlayInfo.class)
-    public Page<StagePlay> getPlaysInfo(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) 
+    public Page<DirectorPlay> getPlaysInfo(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) 
     Pageable pageable) {
 	    return stagePlayService.findByPage(pageable);
 	}   

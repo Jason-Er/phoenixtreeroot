@@ -15,8 +15,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="script_line")
-public class Line {
+@Table(name="writer_line")
+public class WriterLine {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,14 +24,14 @@ public class Line {
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JsonBackReference
-	public Scene scene;
+	public WriterScene scene;
 		
 	@Column(name = "scene_id", insertable = false, updatable = false)
 	public Long sceneId;		
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JsonBackReference
-	public Role2 role;
+	public WriterRole role;
 		
 	@Column(name = "role_id", insertable = false, updatable = false)
 	public Long roleId;

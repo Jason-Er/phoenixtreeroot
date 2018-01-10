@@ -17,8 +17,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="script_stage_scene")
-public class StageScene {
+@Table(name="director_scene")
+public class DirectorScene {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,13 +26,13 @@ public class StageScene {
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)	
 	@JsonBackReference
-	public StagePlay stagePlay;	
+	public DirectorPlay stagePlay;	
 	@Column(name = "stage_play_id", insertable = false, updatable = false)
 	public Long stagePlayId;
 	
 	@OneToMany(mappedBy = "stageScene", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
-	public List<StageLine> stageLines;
+	public List<DirectorLine> stageLines;
 	
 	@Column(name = "act_ordinal")
 	public Long actOrdinal;

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.phoenixtreeroot.model.script.Play;
+import com.phoenixtreeroot.model.script.WriterPlay;
 import com.phoenixtreeroot.repository.PlayRepository;
 
 @Service("playService")
@@ -19,12 +19,12 @@ public class PlayServiceImpl implements PlayService {
 	private PlayRepository repository;
 
 	@Override
-	public Play findById(Long id) {
+	public WriterPlay findById(Long id) {
 		return repository.findOne(id);
 	}
 
 	@Override
-	public void savePlay(Play play) {
+	public void savePlay(WriterPlay play) {
 		repository.save(play);
 	}
 
@@ -39,17 +39,17 @@ public class PlayServiceImpl implements PlayService {
 	}
 
 	@Override
-	public List<Play> findAllPlays() {
+	public List<WriterPlay> findAllPlays() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Page<Play> findByPage(Pageable var1) {
+	public Page<WriterPlay> findByPage(Pageable var1) {
 		return repository.findAll(var1);
 	}
 
 	@Override
-	public boolean isPlayExist(Play play) {
+	public boolean isPlayExist(WriterPlay play) {
 		// TODO Auto-generated method stub
 		return false;
 	}

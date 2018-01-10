@@ -5,22 +5,22 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.phoenixtreeroot.model.script.Play;
+import com.phoenixtreeroot.model.script.WriterPlay;
 
 public interface PlayService {
 
-	Play findById(Long id);	
+	WriterPlay findById(Long id);	
 
-	void savePlay(Play play);
+	void savePlay(WriterPlay play);
 
 	void deletePlayById(Long id);
 
 	void deleteAllPlays();
 
-	List<Play> findAllPlays();
+	List<WriterPlay> findAllPlays();
 
-	Page<Play> findByPage(Pageable var1);
+	Page<WriterPlay> findByPage(Pageable var1);
 
-	boolean isPlayExist(Play play);
+	boolean isPlayExist(WriterPlay play);
 
 }

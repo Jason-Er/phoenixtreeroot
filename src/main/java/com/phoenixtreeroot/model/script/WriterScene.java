@@ -18,8 +18,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="script_scene")
-public class Scene {
+@Table(name="writer_scene")
+public class WriterScene {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,14 +27,14 @@ public class Scene {
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)	
 	@JsonBackReference
-	public Play play;
+	public WriterPlay play;
 	
 	@Column(name = "play_id", insertable = false, updatable = false)
 	public Long playId;
 	
 	@OneToMany(mappedBy = "scene", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
-	public List<Line> lines;
+	public List<WriterLine> lines;
 	
 	@Column(name = "act_ordinal")
 	public Long actOrdinal;

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-@Table(name="sys_user")
+@Table(name = "user_account")
 public class User {
 
 	@Id

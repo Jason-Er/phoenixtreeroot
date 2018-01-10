@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.phoenixtreeroot.model.script.Play;
-import com.phoenixtreeroot.model.script.StagePlay;
+import com.phoenixtreeroot.model.script.WriterPlay;
+import com.phoenixtreeroot.model.script.DirectorPlay;
 import com.phoenixtreeroot.repository.PlayRepository;
 import com.phoenixtreeroot.repository.StagePlayRepository;
 
@@ -21,12 +21,12 @@ public class StagePlayServiceImpl implements StagePlayService {
 	private StagePlayRepository repository;
 
 	@Override
-	public StagePlay findById(Long id) {
+	public DirectorPlay findById(Long id) {
 		return repository.findOne(id);
 	}
 
 	@Override
-	public void saveStagePlay(StagePlay play) {
+	public void saveStagePlay(DirectorPlay play) {
 		repository.save(play);		
 	}
 
@@ -41,17 +41,17 @@ public class StagePlayServiceImpl implements StagePlayService {
 	}
 
 	@Override
-	public List<StagePlay> findAllStagePlays() {
+	public List<DirectorPlay> findAllStagePlays() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Page<StagePlay> findByPage(Pageable page) {
+	public Page<DirectorPlay> findByPage(Pageable page) {
 		return repository.findAll(page);
 	}
 
 	@Override
-	public boolean isStagePlayExist(StagePlay play) {
+	public boolean isStagePlayExist(DirectorPlay play) {
 		// TODO Auto-generated method stub
 		return false;
 	}

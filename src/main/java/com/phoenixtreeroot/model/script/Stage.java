@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="script_stage")
+@Table(name="stage")
 public class Stage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
