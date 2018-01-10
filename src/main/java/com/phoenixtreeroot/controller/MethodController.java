@@ -172,14 +172,9 @@ public class MethodController {
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
 	public ResponseEntity<?> createUser(@Valid @RequestBody User user, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating User " + user.firstName);
+
+		final User registered = userService.registerNewUserAccount(user);
 		
-		if (userService.isUserExist(user)) {
-            System.out.println("A User with name " + user.firstName + " already exist");
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
-		Role role = roleService.findByName(RoleType.AUDIENCE.name());		
-		user.roles = Arrays.asList(role);
-		userService.saveUser(user);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/vi/method/user/{id}").buildAndExpand(user.id).toUri());
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);

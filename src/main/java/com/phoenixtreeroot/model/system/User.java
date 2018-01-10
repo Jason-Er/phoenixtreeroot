@@ -48,6 +48,6 @@ public class User {
 	private Date lastLogin;
 		
 	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "sys_users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     public Collection<Role> roles;
 }
