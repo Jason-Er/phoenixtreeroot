@@ -7,12 +7,18 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.phoenixtreeroot.model.label.View;
 import com.phoenixtreeroot.model.script.Play;
 import com.phoenixtreeroot.model.script.StagePlay;
+import com.phoenixtreeroot.model.system.Role;
+import com.phoenixtreeroot.model.system.RoleType;
 import com.phoenixtreeroot.model.system.User;
 import com.phoenixtreeroot.service.PlayService;
+import com.phoenixtreeroot.service.RoleService;
 import com.phoenixtreeroot.service.StagePlayService;
 import com.phoenixtreeroot.service.UserService;
 
+import java.util.Arrays;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +37,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
-@RequestMapping("/v1/web")
+@RequestMapping("/v1/method")
 public class WebController {
 
 	public static final Logger logger = LoggerFactory.getLogger(WebController.class);
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	RoleService roleService;
 	
 	@Autowired
 	PlayService playService;
@@ -157,6 +166,23 @@ public class WebController {
     public Page<StagePlay> getPlaysInfo(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) 
     Pageable pageable) {
 	    return stagePlayService.findByPage(pageable);
-	}       
+	}   
+    
+    // for user
+    @RequestMapping(value = "/user/", method = RequestMethod.POST)
+	public ResponseEntity<?> createUser(@Valid @RequestBody User user, UriComponentsBuilder ucBuilder) {
+		logger.info("Creating User " + user.firstName);
+		
+		if (userService.isUserExist(user)) {
+            System.out.println("A User with name " + user.firstName + " already exist");
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+		Role role = roleService.findByName(RoleType.AUDIENCE.name());		
+		user.roles = Arrays.asList(role);
+		userService.saveUser(user);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(ucBuilder.path("/vi/method/user/{id}").buildAndExpand(user.id).toUri());
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+	}
     
 }

@@ -3,6 +3,7 @@ package com.phoenixtreeroot.model.system;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,11 +36,11 @@ public class User {
 	public String email;
 	@Column(unique = true, nullable=false)
 	public String cel;
-	@JsonIgnore
+	// @JsonIgnore
 	@Column(nullable=false)
 	public String password;
-	
-	public boolean enabled;
+	@Column(nullable=false)
+	public boolean enabled = false;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
@@ -48,5 +49,5 @@ public class User {
 		
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "sys_users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> roles;
+    public Collection<Role> roles;
 }

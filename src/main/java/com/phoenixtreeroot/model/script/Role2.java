@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="script_role")
-public class Role {
+public class Role2 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;

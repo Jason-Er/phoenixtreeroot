@@ -31,7 +31,7 @@ public class Line {
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JsonBackReference
-	public Role role;
+	public Role2 role;
 		
 	@Column(name = "role_id", insertable = false, updatable = false)
 	public Long roleId;

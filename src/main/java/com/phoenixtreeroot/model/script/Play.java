@@ -38,6 +38,6 @@ public class Play {
 	
 	@OneToMany(mappedBy = "play", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	public List<Role> cast;
+	public List<Role2> cast;
 
 }

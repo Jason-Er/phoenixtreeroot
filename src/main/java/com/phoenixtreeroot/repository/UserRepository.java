@@ -6,4 +6,5 @@ import com.phoenixtreeroot.model.system.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	User findByEmail(String email);
+	User findByCel(String cel);
 }

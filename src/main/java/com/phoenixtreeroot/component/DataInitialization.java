@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 import com.phoenixtreeroot.model.script.Line;
 import com.phoenixtreeroot.model.script.LineType;
 import com.phoenixtreeroot.model.script.Play;
-import com.phoenixtreeroot.model.script.Role;
 import com.phoenixtreeroot.model.script.Scene;
+import com.phoenixtreeroot.model.system.Role;
+import com.phoenixtreeroot.model.system.RoleType;
 import com.phoenixtreeroot.model.system.User;
 import com.phoenixtreeroot.service.PlayService;
+import com.phoenixtreeroot.service.RoleService;
 import com.phoenixtreeroot.service.UserService;
 
 @Component
@@ -23,10 +25,21 @@ public class DataInitialization implements CommandLineRunner {
 	UserService userService;
 	
 	@Autowired
-	PlayService playService;
+	RoleService roleService;
+	
+	@Autowired
+	PlayService playService;	
 
 	@Override
 	public void run(String... arg0) throws Exception {
+		
+		/*
+		roleService.saveRole(new Role(RoleType.ACTOR.name()));		
+		roleService.saveRole(new Role(RoleType.ADMIN.name()));		
+		roleService.saveRole(new Role(RoleType.AUDIENCE.name()));		
+		roleService.saveRole(new Role(RoleType.DIRECTOR.name()));
+		roleService.saveRole(new Role(RoleType.SCREENWRITER.name()));
+		*/
 		/*
 		User user = new User();
 		user.email = "mike@163.com";

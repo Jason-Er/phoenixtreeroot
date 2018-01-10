@@ -2,6 +2,8 @@ package com.phoenixtreeroot.model.system;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +27,7 @@ public class Role {
     @ManyToMany
     @JoinTable(name = "sys_roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     public Collection<Privilege> privileges;
-
+    @Column(unique = true, nullable=false)
     public String name;
 
     public Role() {

@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phoenixtreeroot.model.system.User;
 import com.phoenixtreeroot.repository.UserRepository;
 
 @Service("userService")
+@Transactional
 public class UserServiceImpl implements UserService{
 
 	@Autowired
@@ -21,6 +23,16 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return null;
 	}	
+
+	@Override
+	public User findByEmail(String email) {		
+		return userRepository.findByEmail(email);
+	}
+	
+	@Override
+	public User findByCel(String cel) {
+		return userRepository.findByCel(cel);		
+	}
 
 	@Override
 	public void saveUser(User user) {		
@@ -51,16 +63,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean isUserExist(User user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
-	@Override
-	public User findByEmail(String email) {		
-		return userRepository.findByEmail(email);
+	public boolean isUserExist(User user) {		
+		return (userRepository.findByEmail(user.email) != null || userRepository.findByCel(user.cel) != null);
 	}
 
 }

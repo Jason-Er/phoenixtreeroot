@@ -41,17 +41,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService);
 		auth.authenticationProvider(authenticationProvider());
 	}
-
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// disable caching
 		http.headers().cacheControl();
 
-		http.csrf().disable() // disable csrf for our requests.
-				.authorizeRequests().antMatchers("/").permitAll().antMatchers(HttpMethod.POST, "/login").permitAll()
-				.anyRequest().authenticated();
+		http.csrf().disable(); // disable csrf for our requests.
+				//.authorizeRequests().antMatchers("/").permitAll().antMatchers(HttpMethod.POST, "/login").permitAll()
+				//.anyRequest().authenticated();
 
-	}
+	}	
 	
-	*/
 }
